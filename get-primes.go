@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 )
 
@@ -10,6 +11,10 @@ func main() {
 	start := time.Now()
 	lastPrimeFoundTime := time.Now()
 	var number uint64 = 0
+
+	f, err := os.Create("./data")
+	defer f.Close()
+
 	for number = 0; number >= 0; number++ {
 		if number%10000000 == 0 {
 			fmt.Println(number)
@@ -20,6 +25,10 @@ func main() {
 			t := time.Now()
 			if primeIndex%1000 == 0 {
 				fmt.Printf("%d - %d is prime, %v since last prime, %v elapsed total\n", primeIndex, number, t.Sub(lastPrimeFoundTime), t.Sub(start))
+				f.WriteString(fmt.Sprintf("%d - %d is prime, %v since last prime, %v elapsed total\n", primeIndex, number, t.Sub(lastPrimeFoundTime), t.Sub(start)))
+				if err != nil {
+					panic(err)
+				}
 			}
 
 			lastPrimeFoundTime = time.Now()
@@ -27,6 +36,7 @@ func main() {
 		}
 
 	}
+	f.Sync()
 	fmt.Println("Hello, world!")
 }
 
