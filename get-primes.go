@@ -15,7 +15,10 @@ func main() {
 	f, err := os.Create("./data")
 	defer f.Close()
 
-	for number = 0; number >= 0; number++ {
+	p, err := os.Create("./primes")
+	defer p.Close()
+
+	for number = 5; number >= 0; number++ {
 		if number%10000000 == 0 {
 			fmt.Println(number)
 		}
@@ -30,13 +33,14 @@ func main() {
 					panic(err)
 				}
 			}
-
+			p.WriteString(fmt.Sprintf("%d\n", number))
 			lastPrimeFoundTime = time.Now()
 			primeIndex++
 		}
 
 	}
 	f.Sync()
+	p.Sync()
 	fmt.Println("Hello, world!")
 }
 
