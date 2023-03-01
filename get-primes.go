@@ -6,7 +6,9 @@ import (
 )
 
 func main() {
+	var primeIndex uint64 = 0
 	start := time.Now()
+	lastPrimeFoundTime := time.Now()
 	var number uint64 = 0
 	for number = 0; number >= 0; number++ {
 		if number%10000000 == 0 {
@@ -16,7 +18,12 @@ func main() {
 			continue
 		} else {
 			t := time.Now()
-			fmt.Printf("%d is prime, %v seconds elapsed\n", number, t.Sub(start))
+			if primeIndex%1000 == 0 {
+				fmt.Printf("%d - %d is prime, %v since last prime, %v elapsed total\n", primeIndex, number, t.Sub(lastPrimeFoundTime), t.Sub(start))
+			}
+
+			lastPrimeFoundTime = time.Now()
+			primeIndex++
 		}
 
 	}
