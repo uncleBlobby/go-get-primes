@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"time"
 )
@@ -46,7 +47,7 @@ func main() {
 
 func isPrime(target uint64) bool {
 	var start uint64 = 2
-	for start = 2; start < target/2; start++ {
+	for start = 2; float64(start) < math.Sqrt(float64(target)); start++ {
 		if target%start == 0 {
 			return false
 		}
